@@ -20,42 +20,16 @@ const vaso = new Envase(4, "Vaso 2 bochas", 200, "150 grs", 2);
 const cucurucho = new Envase(5, "Cucurucho", 250, "200 grs", 2);
 const capelina = new Envase(6, "Capelina", 350, "300 grs", 3);
 
-// Sumo los productos al Array
+// Creo el array vacio
 const envases = [];
+// Sumo los productos al Array
 envases.push(cuarto, medio, kilo, vaso, cucurucho, capelina);
-console.log(envases);
 
-// Funcion que sirve para aumentar precios.
-function aumentar ( aumento , id, envases){
-    for (const envase of envases){
-        if(envase.id == id){
-            envase.precio = envase.precio + aumento;
-        }
-    }
-}
-// Funcion que sirve para ver los productos que tiene el heladero.
-function mostrarProductos(envases){
-    for (const envase of envases){
-        console.log("Datos de los envases")
-        //console.log("id: "+envase.id+" nombre: "+envase.nombre+" Precio: "+envase.precio)
-        console.log(envase);
-    }
-}
-// Funcion que sirve para eliminar un producto.
-function eliminarProductos(envases, id){
-    let pos = console.log(envases.indexOf(id));
-    envases.splice(pos,1);
-}
-// Funcion para ingresar al modo que el propietario quiera.
-function seleccionModo(mensaje) {
-    modo = prompt(mensaje);
-    return modo
-}
 // Funcion que sirve para crear objetos.
 function crearObjeto() {
     let entrada = parseInt(prompt("Ingrese la cantidad de productos que quiere agregar: "));
             for (let index = 0; index < entrada; index++) {
-                let envase =  new Envase(prompt("Id"),
+                let envase =  new Envase(parseInt(prompt("Id")),
                                          prompt("Nombre"), 
                                          parseInt(prompt("Precio")), 
                                          prompt("Peso"),
@@ -63,48 +37,81 @@ function crearObjeto() {
                 return envases.unshift(envase);
             }
 }
+
+// Funcion que sirve para ver los productos que tiene el heladero.
+function mostrarProductos(envases){
+    for (const envase of envases){
+        console.log("Datos de los envases");
+        //console.log("id: "+envase.id+" nombre: "+envase.nombre+" Precio: "+envase.precio)
+        console.log(envase);
+    }
+}
+
+// Funcion que sirve para aumentar precios.
+function aumentarPrecio(aumento,id,envases){
+    for (const envase of envases){
+        if(envase.id == id){
+            envase.precio = envase.precio + aumento;
+        }
+    }
+}
+
+// Funcion que sirve para eliminar un producto.
+function eliminarProductos(id){
+    let index = envases.indexOf(parseInt(id));
+    if (index != -1) {
+        envases.splice(index,1);
+        mostrarProductos(envases);
+    }
+}
+
+// Funcion para ingresar al modo que el propietario quiera.
+function seleccionModo(mensaje) {
+    modo = parseInt(prompt(mensaje));
+    return modo
+}
+
 mostrarProductos(envases);
 id = parseInt(prompt("Ingrese el id del envase que desea eliminar : "));
-eliminarProductos(envases, id);
+eliminarProductos(id);
 
-
+/*
 do {
     switch (seleccionModo(
         "Elija la opcion deseada:\n 1 - Ver productos cargados\n 2 - Agregar un producto\n 3 - Aumentar precios\n 4 - Eliminar un producto\n 5 - Exit")
         ) {
-        case "1":
+        case 1:
             //Sirve para ver los productos que tiene el heladero.
             mostrarProductos(envases);
             break;
-        case "2":
+        case 2:
             // Esta parte del codigo le permite al dueño crear un nuevo producto.
             // Cuantos productos quiere agregar.
             crearObjeto();
-            console.log(envases);
+            mostrarProductos(envases);
             break;
-        case "3":
+        case 3:
             id = parseInt(prompt("Ingrese el id del envase que desea modificar el precio: "));
             aumento = parseInt(prompt("Ingrese el aumento en $ que desea: "));
 
             if((id != null) && (id != "") && ((aumento != null) && (aumento != ""))){
-                aumentar(aumento,id,envases);
+                aumentarPrecio(aumento,id,envases);
                 mostrarProductos(envases);
             }
             else{
                 console.log("No se registraron cambios de Precio.");
             }
             break;
-        case "4":
+        case 4:
             mostrarProductos(envases);
             id = parseInt(prompt("Ingrese el id del envase que desea eliminar : "));
-            eliminarProductos(envases, id);
+            eliminarProductos(id);
             break;
-        case "5":
+        case 5:
             alert("Adios!");
             break;
         default:
             alert("Error");
             break;
     }
-    mostrarProductos(envases);
-} while (modo != "5");
+} while (modo != 5);*/
