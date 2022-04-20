@@ -22,6 +22,31 @@ envases.push(new Envase(4, "Vaso 2 bochas", 200, "150 grs", 2));
 envases.push(new Envase(5, "Cucurucho", 250, "200 grs", 2));
 envases.push(new Envase(6, "Capelina", 350, "300 grs", 3));
 
+// Creo los titulos para el HTML, los meto en un div.
+let contenedor = document.getElementsByClassName("titulo");
+let titulo = document.createElement("h2");
+titulo.innerHTML = "<h2>Envases para la venta</h2>";
+document.body.append(titulo);
+let mensaje = document.createElement("h3");
+mensaje.innerHTML = "<h3>Aquí podremos ver los productos junto con sus precios y cantidad de gustos maximos permitidos por envase.</h3>";
+document.body.append(mensaje);
+
+// Funcion para crear una tabla dentro del div.
+function tabla(envase){
+    const contenedor = document.getElementsByClassName("tabla");
+    const tabla = document.createElement("table");
+    tabla.setAttribute("border", "2");
+
+    let tblHead = document.createElement("thead");
+    let tblBody = document.createElement("tbody");
+    tblHead.innerHTML = "<tr><th>ID</th><th>Nombres</th><th>Precio</th><th>Gramos</th><th>Cant Gustos</th></tr>";
+    tabla.appendChild(tblHead);
+
+    tblBody.innerHTML = `<tr><td>${envase.id}</td><td>${envase.nombre}</td><td>${envase.precio}</td><td>${envase.peso}</td><td>${envase.cantGustos}</td></tr>`;;
+    tabla.appendChild(tblBody);
+    document.body.append(tabla);
+}
+
 // Funcion que sirve para crear objetos.
 function crearObjeto() {
     let entrada = parseInt(prompt("Ingrese la cantidad de productos que quiere agregar: "));
@@ -112,3 +137,8 @@ do {
             break;
     }
 } while (modo != 5);
+
+envases.forEach((envases) => {
+    tabla(envases);
+});
+
