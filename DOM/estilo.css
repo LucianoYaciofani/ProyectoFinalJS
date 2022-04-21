@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; }
+
+.titulo {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: black;
+    font-size: 3rem;
+    font-weight: 200;
+}
+
+.texto {
+    margin-left: 1rem;
+    color: #666666;
+    font-size: 1.5rem;
+    line-height: 30px;
+}
+
+/* MENU - NAV */
+.nav__links {
+    position: relative;
+    margin: 2rem;
+    text-decoration: none;
+}
+
+/* MENU - LISTAS */
+.nav__links li {
+    display: inline-block;
+    margin: 2rem;
+    padding-left: 4rem;
+}
+
+/* LISTAS */
+.nav__links li a {
+    color: #795548;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+/* MAYUSCULAS EN MENU */
+.nav__links--activo:hover {
+    text-transform: uppercase;
+}
+
+    
