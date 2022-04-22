@@ -3,62 +3,23 @@ y luego que el cliente los vea mediante un array con sus respectivas info
 */
 // Creo la clase producto para luego crear los objetos
 class Envase {
-    constructor (id, nombre, precio, peso, cantGustos) {
+    constructor (id, nombre, precio, peso) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.peso = peso;
-        this.cantGustos = cantGustos;
         }
 }
 
 // Creo el array vacio
 const envases = [];
 // Creo los productos que la heladeria va a comercializar y los pusheo al array.
-envases.push(new Envase(1, "1/4", 300, "250 grs", 3));
-envases.push(new Envase(2, "1/2", 550, "500 grs", 4));
-envases.push(new Envase(3, "1KG", 980, "1000 grs", 4));
-envases.push(new Envase(4, "Vaso 2 bochas", 200, "150 grs", 2));
-envases.push(new Envase(5, "Cucurucho", 250, "200 grs", 2));
-envases.push(new Envase(6, "Capelina", 350, "300 grs", 3));
-
-// Creo los titulos para el HTML, los meto en un div.
-let contenedor = document.getElementById("titulo");
-let titulo = document.createElement("h2");
-titulo.innerHTML = "<h2>Envases para la venta</h2>";
-contenedor.append(titulo);
-let mensaje = document.createElement("h3");
-mensaje.innerHTML = "<h3>Aquí podremos ver los productos junto con sus precios y cantidad de gustos maximos permitidos por envase.</h3>";
-contenedor.append(mensaje);
-
-// Funcion para crear una tabla dentro del div.
-function tabla(envase){
-    let contenedor = document.getElementById("tabla");
-    let tabla = document.createElement("table");
-    tabla.setAttribute("border", "2");
-
-    let tblHead = document.createElement("thead");
-    let tblBody = document.createElement("tbody");
-    tblHead.innerHTML = "<tr><th>ID</th><th>Nombres</th><th>Precio</th><th>Gramos</th><th>Cant Gustos</th></tr>";
-    tabla.appendChild(tblHead);
-
-    tblBody.innerHTML = `<tr><td>${envase.id}</td><td>${envase.nombre}</td><td>${envase.precio}</td><td>${envase.peso}</td><td>${envase.cantGustos}</td></tr>`;;
-    tabla.appendChild(tblBody);
-    contenedor.append(tabla);
-}
-
-// Funcion que sirve para crear objetos.
-function crearObjeto() {
-    let entrada = parseInt(prompt("Ingrese la cantidad de productos que quiere agregar: "));
-            for (let index = 0; index < entrada; index++) {
-                let id = parseInt(prompt("Id"));
-                let nombre = prompt("Nombre");
-                let precio = parseInt(prompt("Precio"));
-                let peso = prompt("Peso");
-                let cantGustos = parseInt(prompt("Cantidad de gustos"));
-                return new Envase(id, nombre, precio, peso, cantGustos);
-            }
-}
+envases.push(new Envase(1, "1/4", 300, "250 grs"));
+envases.push(new Envase(2, "1/2", 550, "500 grs"));
+envases.push(new Envase(3, "1KG", 980, "1000 grs"));
+envases.push(new Envase(4, "Vaso 2 bochas", 200, "150 grs"));
+envases.push(new Envase(5, "Cucurucho", 250, "200 grs"));
+envases.push(new Envase(6, "Capelina", 350, "300 grs"));
 
 // Aplica el forEach en la funcion mostrarProductos.
 function mostrarProductos(envases) {
@@ -92,7 +53,88 @@ function seleccionModo(mensaje) {
     return modo
 }
 
+function nuevaFila(envase) {
+    const row = document.createElement("tr");
+    let aux = document.createElement("th");
+    aux.innerText = envase.id;
+    row.append(aux);
 
+    aux = document.createElement("th");
+    aux.innerText = envase.cantidad;
+
+    row.append(aux);
+    aux = document.createElement("th");
+    aux.innerText = item.precio;
+    row.append(aux);
+    const eliminarBtn = document.createElement("button");
+    eliminarBtn.className = "btn btn-danger";
+    eliminarBtn.innerText = "Eliminar";
+    const th = document.createElement("th");
+    row.append(th);
+    tabla.append(row);
+}
+
+
+// Funcion que sirve para crear objetos.
+function crearObjeto() {
+    const id = parseInt(document.getElementById("id").value);
+    const nombre = document.getElementById("nombre").value;
+    const precio = parseInt(document.getElementById("precio").value);
+    const peso = document.getElementById("peso").value;
+    return new Envase(id, nombre, precio, peso);
+}
+
+// Funcion que sirve para validar si se completaron los datos
+function validarCampos() {
+    return (
+        parseInt(document.getElementById("id").value ) > 0 && 
+        document.getElementById("nombre").value != "" &&
+        parseInt(document.getElementById("precio").value) > 0 &&
+        parseFloat(document.getElementById("peso").value) != ""
+    );
+}
+
+// Evento que permite agregar productos.
+const agregar = document.getElementById("2");
+agregar.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (validarCampos()) {
+        const envase = crearObjeto();
+        envases.push(envase);
+        tablaProd(envase);
+    }
+});
+
+// Todo este bloque sirve para crear una tabla con los objetos generados.
+const contenedor = document.getElementById("ver");
+contenedor.className = "table table-secondary";
+const tabla = document.createElement("table");
+tabla.setAttribute("border", "2");
+const tblHead = document.createElement("thead");
+// tblHead.innerHTML = "<tr><th>ID</th><th>Nombres</th><th>Precio</th><th>Gramos</th></tr>";
+const tr = document.createElement("tr");
+tr.innerHTML = "<th>ID</th><th>Nombres</th><th>Precio</th><th>Gramos</th>";
+tblHead.appendChild(tr);
+tabla.appendChild(tblHead);
+const tblBody = document.createElement("tbody");
+// Funcion para crear una tabla dentro del div.
+function tablaProd(envase){
+    const fila = document.createElement("tr");
+    fila.innerHTML = `<td>${envase.id}</td><td>${envase.nombre}</td><td>${envase.precio}</td><td>${envase.peso}</td>`;
+    tblBody.appendChild(fila);
+    tabla.appendChild(tblBody);
+    contenedor.append(tabla);
+}
+
+// Evento que permite ver los productos cargados.
+const ver = document.getElementById("1");
+ver.onclick = () => {
+    envases.forEach((envases) => {
+    tablaProd(envases);
+    });
+}
+
+/*
 do {
     switch (seleccionModo(
         "Elija la opcion deseada:\n 1 - Ver productos cargados\n 2 - Agregar un producto\n 3 - Aumentar precios\n 4 - Eliminar un producto\n 5 - Exit")
@@ -137,8 +179,8 @@ do {
             break;
     }
 } while (modo != 5);
-
-envases.forEach((envases) => {
-    tabla(envases);
-});
+*/
+// envases.forEach((envases) => {
+// tabla(envases);
+// });
 
