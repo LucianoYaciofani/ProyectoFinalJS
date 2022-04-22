@@ -134,6 +134,16 @@ ver.onclick = () => {
     });
 }
 
+const eliminar = document.getElementById("4");
+let pos = buscarItem(
+    prompt("Ingrese el nombre del item a eliminar"),
+    envases
+);
+if (pos >= 0) {
+    envases.splice(pos, 1);
+}
+
+
 /*
 do {
     switch (seleccionModo(

@@ -16,6 +16,7 @@
 }
 
 .texto {
+    text-align: center;
     margin-left: 1rem;
     color: #666666;
     font-size: 1.5rem;
@@ -56,6 +57,23 @@
 }
 
 .form {
-    width: auto;
+    width: 100%;
+}
+
+.contacto_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-input {
+    width: 60%;
+    background-color: #FFEEAD;
+    border-top: double;
 }
     
+.form-sub {
+    width: 30%;
+    align-items: center;
+    margin-left: 34rem;
+}
