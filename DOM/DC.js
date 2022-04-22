@@ -95,13 +95,14 @@ function validarCampos() {
 }
 
 // Evento que permite agregar productos.
-const agregar = document.getElementById("2");
+const agregar = document.getElementById("btn-agregar");
 agregar.addEventListener("submit", (e) => {
     e.preventDefault();
     if (validarCampos()) {
-        const envase = crearObjeto();
-        envases.push(envase);
-        tablaProd(envase);
+        validarCampos()
+        const envNuevo = crearObjeto();
+        envases.push(envNuevo);
+        tablaProd(envNuevo);
     }
 });
 
@@ -134,14 +135,12 @@ ver.onclick = () => {
     });
 }
 
-const eliminar = document.getElementById("4");
-let pos = buscarItem(
-    prompt("Ingrese el nombre del item a eliminar"),
-    envases
-);
-if (pos >= 0) {
+const eliminar = document.getElementById("eliminar");
+eliminar.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const pos = envases.indexOf(Envase.id);
     envases.splice(pos, 1);
-}
+});
 
 
 /*

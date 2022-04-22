@@ -5,11 +5,7 @@
 
 .titulo {
     padding: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
     text-align: center;
-    align-items: center;
     color: black;
     font-size: 3rem;
     font-weight: 200;
@@ -17,7 +13,6 @@
 
 .texto {
     text-align: center;
-    margin-left: 1rem;
     color: #666666;
     font-size: 1.5rem;
     line-height: 30px;
@@ -57,23 +52,28 @@
 }
 
 .form {
-    width: 100%;
+    width: 50%;
+    margin: auto;
 }
 
-.contacto_form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+label {
+    display: block;
+    width: 50%;
+    margin: auto;
+    text-align: center;
 }
 
 .form-input {
-    width: 60%;
+    display: block;
+    width: 100%;
+    text-align: center;
     background-color: #FFEEAD;
     border-top: double;
+    border-radius: 0.5rem;
 }
     
 .form-sub {
-    width: 30%;
+    width: 50%;
+    margin-left: 12rem;
     align-items: center;
-    margin-left: 34rem;
 }
