@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <main>
+    <header class="header">
         <h1 class="titulo">Esta es la Intranet del propietario</h1>
         <p class="texto">Aquí podrás ver y modificar los productos que comercializas.</p>
         <ul class="nav__links">
@@ -24,10 +24,11 @@
             <li><a id="4" class="nav__links--activo" href="#eliminar">Eliminar producto</a></li>
             <li><a id="5" class="nav__links--activo" href="">Salir</a></li>
         </ul>
+    </header>
+    <main class="main">
         <!-- Una buena idea para eventos seria completar el html con una app para que el heladero
     gestione los cambios de sus productos.
     Por ej: seleccionar el envase que quiere para eliminarlo o subirle el precio. -->
-        <div id="ver"></div>
         <div>
             <form id="agregar" class="form">
                 <div class="contacto_form">
@@ -37,33 +38,36 @@
                     <input type="number" step="0.01" class="mb-3 form-input" id="precio" placeholder="Precio Unitario">
                     <input type="text" class="form-input" id="peso" placeholder="Peso del producto">
                 </div>
-                <button id="btn-agregar" class="mb-5 mt-5 btn btn-outline-secondary form-sub">
+                <button id="btn-agregar" class="mb-5 mt-5 btn btn-dark form-sub">
                     Agregar
                 </button>
             </form>
+        </div>
+        <div id="ver">
+            <table class="table table-warning table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Peso</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody id="tBody">
+                </tbody>
+            </table>
         </div>
         <div>
             <form id="aumentar" class="form">
                 <div class="contacto_form">
                     <label for="aumento" class="mt-5">Incrementador de precio</label>
                     <input type="number" step="0.01" id="aumento" class="mt-3 mb-3 form-input"
-                        placeholder="Ingrese el valor a aumentar">
+                        placeholder="Ingrese el valor a aumentar en porcentaje">
                 </div>
-                <button class="mb-5 mt-5 btn btn-outline-secondary form-sub">Aumentar</button>
+                <button class="mb-5 mt-5 btn btn-dark form-sub">Aumentar</button>
             </form>
         </div>
-        <div>
-            <form id="eliminar" class="form">
-                <div class="contacto_form">
-                    <label for="aumento" class="mt-5">Eliminar producto</label>
-                    <input type="number" step="0.01" id="aumento" class="mt-3 mb-3 form-input"
-                        placeholder="Ingrese el producto a eliminar">
-                </div>
-                <button class="mb-5 mt-5 btn btn-outline-secondary form-sub">Eliminar</button>
-            </form>
-        </div>
-        <!-- <div id="titulo"></div> -->
-        <div id="tabla"></div>
     </main>
     <script src="./DC.js"></script>
 </body>

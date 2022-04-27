@@ -12,7 +12,8 @@ class Envase {
 }
 
 // Creo el array vacio
-const envases = [];
+let envases = [];
+
 // Creo los productos que la heladeria va a comercializar y los pusheo al array.
 envases.push(new Envase(1, "1/4", 300, "250 grs"));
 envases.push(new Envase(2, "1/2", 550, "500 grs"));
@@ -20,23 +21,6 @@ envases.push(new Envase(3, "1KG", 980, "1000 grs"));
 envases.push(new Envase(4, "Vaso 2 bochas", 200, "150 grs"));
 envases.push(new Envase(5, "Cucurucho", 250, "200 grs"));
 envases.push(new Envase(6, "Capelina", 350, "300 grs"));
-
-// Aplica el forEach en la funcion mostrarProductos.
-function mostrarProductos(envases) {
-    envases.forEach( (envase) => {
-        console.log("Datos de los envases")
-        console.log(envase)
-    })
-}
-
-// Funcion que permite buscar un item.
-function buscarItem(nombre, env) {
-    let i = env.length - 1;
-    while (i >= 0 && nombre != env[i].nombre) {
-        i--;
-    }
-    return i;
-}
 
 // Funcion que sirve para aumentar precios.
 function aumentarPrecio(aumento,id,envases){
@@ -46,34 +30,6 @@ function aumentarPrecio(aumento,id,envases){
         }
     }
 }
-
-// Funcion para ingresar al modo que el propietario quiera.
-function seleccionModo(mensaje) {
-    modo = parseInt(prompt(mensaje));
-    return modo
-}
-
-function nuevaFila(envase) {
-    const row = document.createElement("tr");
-    let aux = document.createElement("th");
-    aux.innerText = envase.id;
-    row.append(aux);
-
-    aux = document.createElement("th");
-    aux.innerText = envase.cantidad;
-
-    row.append(aux);
-    aux = document.createElement("th");
-    aux.innerText = item.precio;
-    row.append(aux);
-    const eliminarBtn = document.createElement("button");
-    eliminarBtn.className = "btn btn-danger";
-    eliminarBtn.innerText = "Eliminar";
-    const th = document.createElement("th");
-    row.append(th);
-    tabla.append(row);
-}
-
 
 // Funcion que sirve para crear objetos.
 function crearObjeto() {
@@ -96,100 +52,64 @@ function validarCampos() {
 
 // Evento que permite agregar productos.
 const agregar = document.getElementById("btn-agregar");
-agregar.addEventListener("submit", (e) => {
-    e.preventDefault();
+agregar.onclick = () => {
     if (validarCampos()) {
-        validarCampos()
+        validarCampos();
         const envNuevo = crearObjeto();
         envases.push(envNuevo);
         tablaProd(envNuevo);
     }
-});
+};
 
-// Todo este bloque sirve para crear una tabla con los objetos generados.
-const contenedor = document.getElementById("ver");
-contenedor.className = "table table-secondary";
-const tabla = document.createElement("table");
-tabla.setAttribute("border", "2");
-const tblHead = document.createElement("thead");
-// tblHead.innerHTML = "<tr><th>ID</th><th>Nombres</th><th>Precio</th><th>Gramos</th></tr>";
-const tr = document.createElement("tr");
-tr.innerHTML = "<th>ID</th><th>Nombres</th><th>Precio</th><th>Gramos</th>";
-tblHead.appendChild(tr);
-tabla.appendChild(tblHead);
-const tblBody = document.createElement("tbody");
+// Todo este bloque sirve para crear el cuerpo de la tabla con los objetos.
+const tblBody = document.getElementById("tBody");
 // Funcion para crear una tabla dentro del div.
 function tablaProd(envase){
+    const pos = envases.indexOf(envase);
+    const eliminarBtn = document.createElement("button");
+    eliminarBtn.id = "eliminar";
+    eliminarBtn.className = "btn btn-dark";
+    eliminarBtn.innerText = "Eliminar";
+    eliminarBtn.onclick = () => {
+        envases.splice(pos, 1);
+        actualizarTabla();
+    };
+    const th = document.createElement("th");
+    th.append(eliminarBtn);
     const fila = document.createElement("tr");
     fila.innerHTML = `<td>${envase.id}</td><td>${envase.nombre}</td><td>${envase.precio}</td><td>${envase.peso}</td>`;
+    fila.append(th);
     tblBody.appendChild(fila);
-    tabla.appendChild(tblBody);
-    contenedor.append(tabla);
 }
+
+// Funcion para que la tabla se reinicie cada vez que se presione el boton.
+function actualizarTabla() {
+    tblBody.innerHTML = "";
+    envases.forEach((envase) => {
+        tablaProd(envase);
+    });
+};
 
 // Evento que permite ver los productos cargados.
 const ver = document.getElementById("1");
 ver.onclick = () => {
-    envases.forEach((envases) => {
-    tablaProd(envases);
-    });
-}
+    actualizarTabla();
+};
 
-const eliminar = document.getElementById("eliminar");
-eliminar.addEventListener("submit", (e) => {
+// Evento de tipo submit para aumentar los precios de los productos.
+const aumentar = document.getElementById("aumentar");
+aumentar.addEventListener("submit", (e) => {
     e.preventDefault();
-    const pos = envases.indexOf(Envase.id);
-    envases.splice(pos, 1);
-});
-
-
-/*
-do {
-    switch (seleccionModo(
-        "Elija la opcion deseada:\n 1 - Ver productos cargados\n 2 - Agregar un producto\n 3 - Aumentar precios\n 4 - Eliminar un producto\n 5 - Exit")
-        ) {
-        case 1:
-            // Sirve para ver los productos que tiene el heladero.
-            mostrarProductos(envases);
-            break;
-        case 2:
-            // Esta parte del codigo le permite al dueño crear un nuevo producto.
-            // Cuantos productos quiere agregar.
-            envases.push(crearObjeto());
-            mostrarProductos(envases);
-            break;
-        case 3:
-            id = parseInt(prompt("Ingrese el id del envase que desea modificar el precio: "));
-            aumento = parseInt(prompt("Ingrese el aumento en $ que desea: "));
-
-            if((id != null) && (id != "") && ((aumento != null) && (aumento != ""))){
-                aumentarPrecio(aumento,id,envases);
-                mostrarProductos(envases);
-            }
-            else{
-                console.log("No se registraron cambios de Precio.");
-            }
-            break;
-        case 4:
-            let pos = buscarItem(
-                prompt("Ingrese el nombre del item a eliminar"),
-                envases
-            );
-            if (pos >= 0) {
-                envases.splice(pos, 1);
-            }
-            mostrarProductos(envases);
-            break;
-        case 5:
-            alert("Adios!");
-            break;
-        default:
-            alert("Error");
-            break;
+    const valor = document.getElementById("aumento").value;
+    if (valor > 0) {
+        envases = envases.map((envase) => {
+            return {
+                id: envase.id,
+                nombre: envase.nombre,
+                precio: (envase.precio * valor / 100) + envase.precio,
+                peso: envase.peso,
+            };
+        });
+        actualizarTabla();
     }
-} while (modo != 5);
-*/
-// envases.forEach((envases) => {
-// tabla(envases);
-// });
-
+});

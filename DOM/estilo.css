@@ -1,14 +1,23 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; }
+    box-sizing: border-box;
+}
+ .header {
+    background-color: #96CEB4;
+ }
+
+.main {
+    background-color: #F0EDDC;
+}
 
 .titulo {
     padding: 20px;
     text-align: center;
     color: black;
     font-size: 3rem;
-    font-weight: 200;
+    font-weight: 500;
+    color: #D9534F;
 }
 
 .texto {
@@ -20,35 +29,41 @@
 
 /* MENU - NAV */
 .nav__links {
-    position: relative;
-    margin: 2rem;
+    width: 80%;
+    margin: auto;
     text-decoration: none;
 }
 
 /* MENU - LISTAS */
 .nav__links li {
     display: inline-block;
-    margin: 2rem;
-    padding-left: 4rem;
+    padding: 2rem;
 }
 
 /* LISTAS */
 .nav__links li a {
-    color: #795548;
+    color: #FFEEAD;
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 500;
 }
 
 /* MAYUSCULAS EN MENU */
 .nav__links--activo:hover {
     text-transform: uppercase;
+    color: #D9534F;
 }
 
 .table {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 80%;
+    text-align: center;
+    margin: auto;
+    border: double;
+    background-color: #FFEEAD;
+}
+
+.btn-dark {
+    color: #FFEEAD;
 }
 
 .form {
@@ -60,7 +75,9 @@ label {
     display: block;
     width: 50%;
     margin: auto;
+    font-size: 1.5rem;
     text-align: center;
+    padding: 2rem;
 }
 
 .form-input {
@@ -69,7 +86,7 @@ label {
     text-align: center;
     background-color: #FFEEAD;
     border-top: double;
-    border-radius: 0.5rem;
+    padding: 0.5rem 0.5rem;
 }
     
 .form-sub {
