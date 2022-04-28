@@ -22,15 +22,6 @@ envases.push(new Envase(4, "Vaso 2 bochas", 200, "150 grs"));
 envases.push(new Envase(5, "Cucurucho", 250, "200 grs"));
 envases.push(new Envase(6, "Capelina", 350, "300 grs"));
 
-// Funcion que sirve para aumentar precios.
-function aumentarPrecio(aumento,id,envases){
-    for (const envase of envases){
-        if(envase.id == id){
-            envase.precio = envase.precio + aumento;
-        }
-    }
-}
-
 // Funcion que sirve para crear objetos.
 function crearObjeto() {
     const id = parseInt(document.getElementById("id").value);
@@ -113,3 +104,6 @@ aumentar.addEventListener("submit", (e) => {
         actualizarTabla();
     }
 });
+
+localStorage.setItem("envases", JSON.stringify(envases));
+alert(envases);
