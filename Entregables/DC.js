@@ -1,16 +1,3 @@
-/*El objetivos del programa es crear productos mediante POO para una heladeria, 
-y luego que el cliente los vea mediante un array con sus respectivas info
-*/
-// Creo la clase producto para luego crear los objetos
-class Envase {
-    constructor (id, nombre, precio, peso) {
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.peso = peso;
-        }
-}
-
 // Creo el array vacio
 let envases = [];
 
