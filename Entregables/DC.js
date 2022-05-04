@@ -43,6 +43,7 @@ agregar.onclick = () => {
         const envNuevo = crearObjeto();
         envases.push(envNuevo);
         tablaProd(envNuevo);
+        localStorage.setItem(envNuevo.nombre, JSON.stringify(envNuevo));
     }
 };
 
@@ -70,9 +71,15 @@ function tablaProd(envase){
 // Funcion para que la tabla se reinicie cada vez que se presione el boton.
 function actualizarTabla() {
     tblBody.innerHTML = "";
-    envases.forEach((envase) => {
+    if (envasesAlmacenados != null) {
+        envasesAlmacenados.forEach((envase) => {
+            tablaProd(envase);
+        });
+    } else {
+        envases.forEach((envase) => {
         tablaProd(envase);
-    });
+        });
+    };
 };
 
 // Evento que permite ver los productos cargados.
@@ -98,3 +105,12 @@ aumentar.addEventListener("submit", (e) => {
         actualizarTabla();
     }
 });
+
+//Ciclo para recorrer las claves almacenadas en el objeto localStorage
+for (let i = 0; i < localStorage.length; i++) {
+    let clave = localStorage.key(i);
+    let envAlmacenado = localStorage.getItem(clave);
+    let envParseado = JSON.parse(envAlmacenado);
+    console.log(envParseado);
+    envasesAlmacenados.push(envParseado);
+};
