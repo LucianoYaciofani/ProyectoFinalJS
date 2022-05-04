@@ -1,5 +1,6 @@
 // Creo el array vacio
 let envases = [];
+let envasesAlmacenados = [];
 
 // Creo los productos que la heladeria va a comercializar y los pusheo al array.
 envases.push(new Envase(1, "1/4", 300, "250 grs"));
@@ -8,6 +9,12 @@ envases.push(new Envase(3, "1KG", 980, "1000 grs"));
 envases.push(new Envase(4, "Vaso 2 bochas", 200, "150 grs"));
 envases.push(new Envase(5, "Cucurucho", 250, "200 grs"));
 envases.push(new Envase(6, "Capelina", 350, "300 grs"));
+
+// Almacenar producto por producto.
+for (const envase of envases) {
+    localStorage.setItem(envase.nombre, JSON.stringify(envase));
+};
+
 
 // Funcion que sirve para crear objetos.
 function crearObjeto() {
@@ -91,6 +98,3 @@ aumentar.addEventListener("submit", (e) => {
         actualizarTabla();
     }
 });
-
-localStorage.setItem("envases", JSON.stringify(envases));
-alert(envases);
