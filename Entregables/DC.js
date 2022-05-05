@@ -13,6 +13,7 @@ envases.push(new Envase(6, "Capelina", 350, "300 grs"));
 // Almacenar producto por producto.
 for (const envase of envases) {
     localStorage.setItem(envase.nombre, JSON.stringify(envase));
+    console.log(envase);
 };
 
 
@@ -51,13 +52,13 @@ agregar.onclick = () => {
 const tblBody = document.getElementById("tBody");
 // Funcion para crear una tabla dentro del div.
 function tablaProd(envase){
-    const pos = envases.indexOf(envase);
+    const pos = envases.indexOf(envase) || envasesAlmacenados.indexOf(envase);
     const eliminarBtn = document.createElement("button");
     eliminarBtn.id = "eliminar";
     eliminarBtn.className = "btn btn-dark";
     eliminarBtn.innerText = "Eliminar";
     eliminarBtn.onclick = () => {
-        envases.splice(pos, 1);
+        envases.splice(pos, 1) || envasesAlmacenados.splice(pos, 1);
         actualizarTabla();
     };
     const th = document.createElement("th");
@@ -71,15 +72,15 @@ function tablaProd(envase){
 // Funcion para que la tabla se reinicie cada vez que se presione el boton.
 function actualizarTabla() {
     tblBody.innerHTML = "";
-    if (envasesAlmacenados != null) {
+    /*if (envasesAlmacenados != null) {
         envasesAlmacenados.forEach((envase) => {
             tablaProd(envase);
         });
-    } else {
+    } else {*/
         envases.forEach((envase) => {
         tablaProd(envase);
         });
-    };
+    //};
 };
 
 // Evento que permite ver los productos cargados.
