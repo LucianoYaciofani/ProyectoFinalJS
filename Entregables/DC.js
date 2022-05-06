@@ -10,12 +10,8 @@ envases.push(new Envase(4, "Vaso 2 bochas", 200, "150 grs"));
 envases.push(new Envase(5, "Cucurucho", 250, "200 grs"));
 envases.push(new Envase(6, "Capelina", 350, "300 grs"));
 
-// Almacenar producto por producto.
-for (const envase of envases) {
-    localStorage.setItem(envase.nombre, JSON.stringify(envase));
-    console.log(envase);
-};
-
+// Funcion para guardar en Json.
+const guardarLocal = (clave, valor) => { localStorage.setItem(clave, valor) };
 
 // Funcion que sirve para crear objetos.
 function crearObjeto() {
@@ -32,7 +28,7 @@ function validarCampos() {
         parseInt(document.getElementById("id").value ) > 0 && 
         document.getElementById("nombre").value != "" &&
         parseInt(document.getElementById("precio").value) > 0 &&
-        parseFloat(document.getElementById("peso").value) != ""
+        document.getElementById("peso").value != ""
     );
 }
 
@@ -44,21 +40,25 @@ agregar.onclick = () => {
         const envNuevo = crearObjeto();
         envases.push(envNuevo);
         tablaProd(envNuevo);
-        localStorage.setItem(envNuevo.nombre, JSON.stringify(envNuevo));
-    }
+        envasesAlmacenados = guardarLocal("listaProductos", JSON.stringify(envases));
+    };
 };
 
 // Todo este bloque sirve para crear el cuerpo de la tabla con los objetos.
 const tblBody = document.getElementById("tBody");
 // Funcion para crear una tabla dentro del div.
 function tablaProd(envase){
-    const pos = envases.indexOf(envase) || envasesAlmacenados.indexOf(envase);
+    const pos = envases.indexOf(envase);
     const eliminarBtn = document.createElement("button");
     eliminarBtn.id = "eliminar";
     eliminarBtn.className = "btn btn-dark";
     eliminarBtn.innerText = "Eliminar";
+    //Funcion que permite eliminar objetos.
     eliminarBtn.onclick = () => {
-        envases.splice(pos, 1) || envasesAlmacenados.splice(pos, 1);
+        envases.splice(pos, 1);
+        console.log(envases);
+        guardarLocal("listaProductos", JSON.stringify(envases));
+        envasesAlmacenados = envases;
         actualizarTabla();
     };
     const th = document.createElement("th");
@@ -72,15 +72,16 @@ function tablaProd(envase){
 // Funcion para que la tabla se reinicie cada vez que se presione el boton.
 function actualizarTabla() {
     tblBody.innerHTML = "";
-    /*if (envasesAlmacenados != null) {
-        envasesAlmacenados.forEach((envase) => {
+    if (envasesAlmacenados) {
+        envases = envasesAlmacenados;
+        envases.forEach((envase) => {
             tablaProd(envase);
-        });
-    } else {*/
+            });
+    } else {
         envases.forEach((envase) => {
         tablaProd(envase);
         });
-    //};
+    };
 };
 
 // Evento que permite ver los productos cargados.
@@ -103,15 +104,10 @@ aumentar.addEventListener("submit", (e) => {
                 peso: envase.peso,
             };
         });
+        envasesAlmacenados = guardarLocal("listaProductos", JSON.stringify(envases));
         actualizarTabla();
     }
 });
 
-//Ciclo para recorrer las claves almacenadas en el objeto localStorage
-for (let i = 0; i < localStorage.length; i++) {
-    let clave = localStorage.key(i);
-    let envAlmacenado = localStorage.getItem(clave);
-    let envParseado = JSON.parse(envAlmacenado);
-    console.log(envParseado);
-    envasesAlmacenados.push(envParseado);
-};
+// Acá almaceno en un nuevo array, el array guardado en el Local.
+envasesAlmacenados = JSON.parse(localStorage.getItem("listaProductos"));
