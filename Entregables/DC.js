@@ -35,13 +35,15 @@ function validarCampos() {
 // Evento que permite agregar productos.
 const agregar = document.getElementById("btn-agregar");
 agregar.onclick = () => {
-    if (validarCampos()) {
-        validarCampos();
-        const envNuevo = crearObjeto();
-        envases.push(envNuevo);
-        tablaProd(envNuevo);
-        envasesAlmacenados = guardarLocal("listaProductos", JSON.stringify(envases));
-    };
+    validarCampos() && agregarYAlmacenarObjeto();
+};
+
+// Funcion que agrega un nuevo envase al array y lo almacena en el Storage.
+function agregarYAlmacenarObjeto () {
+    const envNuevo = crearObjeto();
+    envases.push(envNuevo);
+    tablaProd(envNuevo);
+    envasesAlmacenados = guardarLocal("listaProductos", JSON.stringify(envases));
 };
 
 // Todo este bloque sirve para crear el cuerpo de la tabla con los objetos.
@@ -70,24 +72,30 @@ function tablaProd(envase){
 }
 
 // Funcion para que la tabla se reinicie cada vez que se presione el boton.
-function actualizarTabla() {
+function actualizarTabla(envase) {
     tblBody.innerHTML = "";
-    if (envasesAlmacenados) {
-        envases = envasesAlmacenados;
-        envases.forEach((envase) => {
-            tablaProd(envase);
-            });
-    } else {
-        envases.forEach((envase) => {
+    envasesAlmacenados ? mostrarAlmacenados(envase) : mostrarOriginales(envase);
+};
+
+// Funcion para reducir lineas de codigo y poder implementar el operador ternario en actualizarTabla.
+function mostrarAlmacenados(envase) {
+    envases = envasesAlmacenados;
+    envases.forEach((envase) => {
         tablaProd(envase);
         });
-    };
+};
+
+// Funcion para reducir lineas de codigo y poder implementar el operador ternario en actualizarTabla.
+function mostrarOriginales(envase) {
+    envases.forEach((envase) => {
+        tablaProd(envase);
+        });
 };
 
 // Evento que permite ver los productos cargados.
 const ver = document.getElementById("1");
-ver.onclick = () => {
-    actualizarTabla();
+ver.onclick = (envase) => {
+    actualizarTabla(envase);
 };
 
 // Evento de tipo submit para aumentar los precios de los productos.
@@ -95,19 +103,23 @@ const aumentar = document.getElementById("aumentar");
 aumentar.addEventListener("submit", (e) => {
     e.preventDefault();
     const valor = document.getElementById("aumento").value;
-    if (valor > 0) {
-        envases = envases.map((envase) => {
-            return {
-                id: envase.id,
-                nombre: envase.nombre,
-                precio: (envase.precio * valor / 100) + envase.precio,
-                peso: envase.peso,
-            };
-        });
-        envasesAlmacenados = guardarLocal("listaProductos", JSON.stringify(envases));
-        actualizarTabla();
-    }
+    valor > 0 && aumentarYGuardar(valor);
 });
+
+// Funcion que sirve para aumentar el precio de los envases y guardarlos en el Storage.
+function aumentarYGuardar(valor) {
+    envases = envases.map((envase) => {
+        return {
+            id: envase.id,
+            nombre: envase.nombre,
+            // No quiero decimales por lo que aplico math.round.
+            precio: Math.round((envase.precio * valor / 100) + envase.precio),
+            peso: envase.peso,
+        };
+    });
+    envasesAlmacenados = guardarLocal("listaProductos", JSON.stringify(envases));
+    actualizarTabla();
+};
 
 // Acá almaceno en un nuevo array, el array guardado en el Local.
 envasesAlmacenados = JSON.parse(localStorage.getItem("listaProductos"));
