@@ -58,7 +58,6 @@ function tablaProd(envase){
     //Funcion que permite eliminar objetos.
     eliminarBtn.onclick = () => {
         envases.splice(pos, 1);
-        console.log(envases);
         guardarLocal("listaProductos", JSON.stringify(envases));
         envasesAlmacenados = envases;
         actualizarTabla();
@@ -66,7 +65,13 @@ function tablaProd(envase){
     const th = document.createElement("th");
     th.append(eliminarBtn);
     const fila = document.createElement("tr");
-    fila.innerHTML = `<td>${envase.id}</td><td>${envase.nombre}</td><td>${envase.precio}</td><td>${envase.peso}</td>`;
+    // Aplico desestructuracion de objetos dentro del array.
+    let {id, nombre, precio, peso} = envase;
+    for (envase of envases) {
+        fila.innerHTML = `<td>${id}</td><td>${nombre}</td><td>${precio}</td><td>${peso}</td>`;
+    }
+    /*
+    fila.innerHTML = `<td>${envase.id}</td><td>${envase.nombre}</td><td>${envase.precio}</td><td>${envase.peso}</td>`;*/
     fila.append(th);
     tblBody.appendChild(fila);
 }
@@ -78,7 +83,7 @@ function actualizarTabla(envase) {
 };
 
 // Funcion para reducir lineas de codigo y poder implementar el operador ternario en actualizarTabla.
-function mostrarAlmacenados(envase) {
+function mostrarAlmacenados() {
     envases = envasesAlmacenados;
     envases.forEach((envase) => {
         tablaProd(envase);
@@ -86,7 +91,7 @@ function mostrarAlmacenados(envase) {
 };
 
 // Funcion para reducir lineas de codigo y poder implementar el operador ternario en actualizarTabla.
-function mostrarOriginales(envase) {
+function mostrarOriginales() {
     envases.forEach((envase) => {
         tablaProd(envase);
         });
@@ -109,12 +114,14 @@ aumentar.addEventListener("submit", (e) => {
 // Funcion que sirve para aumentar el precio de los envases y guardarlos en el Storage.
 function aumentarYGuardar(valor) {
     envases = envases.map((envase) => {
+        // Aplico desestructuracion para facilitar luego la forma de llamar cada atributo.
+        let {id, nombre, precio, peso} = envase;
         return {
-            id: envase.id,
-            nombre: envase.nombre,
+            id: id,
+            nombre: nombre,
             // No quiero decimales por lo que aplico math.round.
-            precio: Math.round((envase.precio * valor / 100) + envase.precio),
-            peso: envase.peso,
+            precio: Math.round((precio * valor / 100) + precio),
+            peso: peso,
         };
     });
     envasesAlmacenados = guardarLocal("listaProductos", JSON.stringify(envases));
