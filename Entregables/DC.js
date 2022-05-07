@@ -20,7 +20,7 @@ function crearObjeto() {
     const precio = parseInt(document.getElementById("precio").value);
     const peso = document.getElementById("peso").value;
     return new Envase(id, nombre, precio, peso);
-}
+};
 
 // Funcion que sirve para validar si se completaron los datos
 function validarCampos() {
@@ -30,12 +30,15 @@ function validarCampos() {
         parseInt(document.getElementById("precio").value) > 0 &&
         document.getElementById("peso").value != ""
     );
-}
+};
 
 // Evento que permite agregar productos.
 const agregar = document.getElementById("btn-agregar");
 agregar.onclick = () => {
     validarCampos() && agregarYAlmacenarObjeto();
+    // Si validar da true, tira alerta confirmatorio, sino erronea.
+    const validar = validarCampos() ? true : false;
+    validar ? alertaConfirm() : alertaError();
 };
 
 // Funcion que agrega un nuevo envase al array y lo almacena en el Storage.
@@ -44,6 +47,26 @@ function agregarYAlmacenarObjeto () {
     envases.push(envNuevo);
     tablaProd(envNuevo);
     envasesAlmacenados = guardarLocal("listaProductos", JSON.stringify(envases));
+};
+
+// Funcion para tirar un alerta confirmatoria con Sweet Alert.
+function alertaConfirm() {
+    Swal.fire({
+        title: 'Muy bien!',
+        text: 'Has agregado el producto satisfactoriamente',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    });
+};
+
+// Funcion para tirar un alerta erronea con Sweet Alert.
+function alertaError() {
+    Swal.fire({
+        title: 'Error!',
+        text: 'Te faltaron agregar datos del formulario',
+        icon: 'error',
+        confirmButtonText: 'Cerrar'
+    });
 };
 
 // Todo este bloque sirve para crear el cuerpo de la tabla con los objetos.
@@ -55,12 +78,32 @@ function tablaProd(envase){
     eliminarBtn.id = "eliminar";
     eliminarBtn.className = "btn btn-dark";
     eliminarBtn.innerText = "Eliminar";
-    //Funcion que permite eliminar objetos.
+    //Funcion que permite eliminar objetos consultando previamente si lo desea hacer o no.
     eliminarBtn.onclick = () => {
+        Swal.fire({
+            title: 'Está seguro de eliminar el producto?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, seguro',
+            cancelButtonText: 'No, no quiero'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Borrado!',
+                    icon: 'success',
+                    text: 'El envase ha sido borrado'
+                });
+                envases.splice(pos, 1);
+                guardarLocal("listaProductos", JSON.stringify(envases));
+                envasesAlmacenados = envases;
+                actualizarTabla();
+            };
+        });
+        /*
         envases.splice(pos, 1);
         guardarLocal("listaProductos", JSON.stringify(envases));
         envasesAlmacenados = envases;
-        actualizarTabla();
+        actualizarTabla();*/
     };
     const th = document.createElement("th");
     th.append(eliminarBtn);
@@ -74,12 +117,13 @@ function tablaProd(envase){
     fila.innerHTML = `<td>${envase.id}</td><td>${envase.nombre}</td><td>${envase.precio}</td><td>${envase.peso}</td>`;*/
     fila.append(th);
     tblBody.appendChild(fila);
-}
+};
 
 // Funcion para que la tabla se reinicie cada vez que se presione el boton.
 function actualizarTabla(envase) {
     tblBody.innerHTML = "";
     envasesAlmacenados ? mostrarAlmacenados(envase) : mostrarOriginales(envase);
+    guardarLocal("listaProductos", JSON.stringify(envases));
 };
 
 // Funcion para reducir lineas de codigo y poder implementar el operador ternario en actualizarTabla.
@@ -101,6 +145,7 @@ function mostrarOriginales() {
 const ver = document.getElementById("1");
 ver.onclick = (envase) => {
     actualizarTabla(envase);
+
 };
 
 // Evento de tipo submit para aumentar los precios de los productos.
@@ -126,7 +171,21 @@ function aumentarYGuardar(valor) {
     });
     envasesAlmacenados = guardarLocal("listaProductos", JSON.stringify(envases));
     actualizarTabla();
+    Swal.fire({
+        title: 'Muy bien!',
+        text: 'Cambiaste los valores de los productos',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    });
 };
 
 // Acá almaceno en un nuevo array, el array guardado en el Local.
 envasesAlmacenados = JSON.parse(localStorage.getItem("listaProductos"));
+
+const guardarYSalir = document.getElementById("5");
+guardarYSalir.onclick = () => {
+    const divisor = document.createElement("div");
+    divisor.innerHTML = `<p>Has salido del programa</p>`
+    document.body.append(divisor);
+}
+

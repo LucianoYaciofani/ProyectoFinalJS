@@ -27,6 +27,13 @@
     line-height: 30px;
 }
 
+.textoGrande {
+    text-align: center;
+    color: #666666;
+    line-height: 30px;
+    margin: 10rem;
+}
+
 /* MENU - NAV */
 .nav__links {
     width: 80%;
