@@ -46,6 +46,7 @@ function agregarYAlmacenarObjeto () {
     const envNuevo = crearObjeto();
     envases.push(envNuevo);
     tablaProd(envNuevo);
+    ordenar();
     envasesAlmacenados = guardarLocal("listaProductos", JSON.stringify(envases));
 };
 
@@ -94,6 +95,7 @@ function tablaProd(envase){
                     text: 'El envase ha sido borrado'
                 });
                 envases.splice(pos, 1);
+                ordenar();
                 guardarLocal("listaProductos", JSON.stringify(envases));
                 envasesAlmacenados = envases;
                 actualizarTabla();
@@ -145,7 +147,6 @@ function mostrarOriginales() {
 const ver = document.getElementById("1");
 ver.onclick = (envase) => {
     actualizarTabla(envase);
-
 };
 
 // Evento de tipo submit para aumentar los precios de los productos.
@@ -189,3 +190,11 @@ guardarYSalir.onclick = () => {
     document.body.append(divisor);
 }
 
+// Funcion que ordena el array por id.
+function ordenar() {
+    if (envasesAlmacenados != null) {
+        envasesAlmacenados.sort((actual, siguiente) => actual.id - siguiente.id);
+    } else {
+        envases.sort((actual, siguiente) => actual.id - siguiente.id);
+    };
+};
