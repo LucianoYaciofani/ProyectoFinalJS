@@ -3,13 +3,14 @@ let envases = [];
 let envasesAlmacenados = [];
 
 // Creo los productos que la heladeria va a comercializar y los pusheo al array.
+/*
 envases.push(new Envase(1, "1/4", 300, "250 grs"));
 envases.push(new Envase(2, "1/2", 550, "500 grs"));
 envases.push(new Envase(3, "1KG", 980, "1000 grs"));
 envases.push(new Envase(4, "Vaso 2 bochas", 200, "150 grs"));
 envases.push(new Envase(5, "Cucurucho", 250, "200 grs"));
 envases.push(new Envase(6, "Capelina", 350, "300 grs"));
-
+*/
 // Funcion para guardar en Json.
 const guardarLocal = (clave, valor) => { localStorage.setItem(clave, valor) };
 
@@ -144,10 +145,10 @@ function mostrarOriginales() {
 };
 
 // Evento que permite ver los productos cargados.
-const ver = document.getElementById("1");
+/*const ver = document.getElementById("1");
 ver.onclick = (envase) => {
     actualizarTabla(envase);
-};
+};*/
 
 // Evento de tipo submit para aumentar los precios de los productos.
 const aumentar = document.getElementById("aumentar");
@@ -198,3 +199,15 @@ function ordenar() {
         envases.sort((actual, siguiente) => actual.id - siguiente.id);
     };
 };
+
+
+fetch("http://127.0.0.1:5500/Entregables/datos.json")
+    .then((res) => res.json())
+    .then((data) => {
+        data.forEach((envase) => {
+            const ver = document.getElementById("1");
+            ver.onclick = (envase) => {
+                tablaProd(envase);
+            };
+        });
+    });

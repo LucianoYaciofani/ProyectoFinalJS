@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "nombre": "1/4",
+        "precio": 300,
+        "peso": "250 grs"
+    },
+    {
+        "id": 2,
+        "nombre": "1/2",
+        "precio": 550,
+        "peso": "500 grs"
+    },
+    {
+        "id": 3,
+        "nombre": "1 KG",
+        "precio": 980,
+        "peso": "1000 grs"
+    },
+    {
+        "id": 4,
+        "nombre": "Vaso 2 bochas",
+        "precio": 250,
+        "peso": "200 grs"
+    },
+    {
+        "id": 5,
+        "nombre": "Cucurucho",
+        "precio": 550,
+        "peso": "500 grs"
+    },
+    {
+        "id": 6,
+        "nombre": "Capelina",
+        "precio": 350,
+        "peso": "300 grs"
+    },
+    {
+        "id": 7,
+        "nombre": "3/4",
+        "precio": 750,
+        "peso": "750 grs"
+    }
+  ]
