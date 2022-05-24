@@ -114,7 +114,7 @@ function tablaProd(envase){
     // Aplico desestructuracion de objetos dentro del array.
     let {id, nombre, precio, peso} = envase;
     for (envase of envases) {
-        fila.innerHTML = `<td>${id}</td><td>${nombre}</td><td>${precio}</td><td>${peso}</td>`;
+        fila.innerHTML = `<td>${envase.id}</td><td>${envase.nombre}</td><td>${envase.precio}</td><td>${envase.peso}</td>`;
     }
     /*
     fila.innerHTML = `<td>${envase.id}</td><td>${envase.nombre}</td><td>${envase.precio}</td><td>${envase.peso}</td>`;*/
@@ -145,10 +145,10 @@ function mostrarOriginales() {
 };
 
 // Evento que permite ver los productos cargados.
-/*const ver = document.getElementById("1");
+const ver = document.getElementById("1");
 ver.onclick = (envase) => {
     actualizarTabla(envase);
-};*/
+};
 
 // Evento de tipo submit para aumentar los precios de los productos.
 const aumentar = document.getElementById("aumentar");
@@ -199,15 +199,3 @@ function ordenar() {
         envases.sort((actual, siguiente) => actual.id - siguiente.id);
     };
 };
-
-
-fetch("http://127.0.0.1:5500/Entregables/datos.json")
-    .then((res) => res.json())
-    .then((data) => {
-        data.forEach((envase) => {
-            const ver = document.getElementById("1");
-            ver.onclick = (envase) => {
-                tablaProd(envase);
-            };
-        });
-    });
