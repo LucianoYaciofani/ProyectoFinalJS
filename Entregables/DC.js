@@ -3,6 +3,7 @@ let envases = [];
 let envasesAlmacenados = [];
 
 // Creo los productos que la heladeria va a comercializar y los pusheo al array.
+
 envases.push(new Envase(1, "1/4", 300, "250 grs"));
 envases.push(new Envase(2, "1/2", 550, "500 grs"));
 envases.push(new Envase(3, "1KG", 980, "1000 grs"));
@@ -198,3 +199,20 @@ function ordenar() {
         envases.sort((actual, siguiente) => actual.id - siguiente.id);
     };
 };
+
+// Emigro desde el json los primeros datos de los objetos cargados.
+fetch('http://127.0.0.1:5500/Entregables/datos.json')
+    .then( (resp) => resp.json() )
+    .then( (data) => {
+       data = envases;
+        data.forEach((data) => {
+            const tblBody = document.getElementById("tBody");
+            const th = document.createElement("th");
+            const fila = document.createElement("tr");
+            // Aplico desestructuracion de objetos dentro del array.
+            let {id, nombre, precio, peso} = data;
+            fila.innerHTML = `<td>${id}</td><td>${nombre}</td><td>${precio}</td><td>${peso}</td>`;
+            fila.append(th);
+            tblBody.appendChild(fila);
+            });
+    });
