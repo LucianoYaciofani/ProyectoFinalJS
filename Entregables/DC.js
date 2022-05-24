@@ -3,14 +3,13 @@ let envases = [];
 let envasesAlmacenados = [];
 
 // Creo los productos que la heladeria va a comercializar y los pusheo al array.
-/*
 envases.push(new Envase(1, "1/4", 300, "250 grs"));
 envases.push(new Envase(2, "1/2", 550, "500 grs"));
 envases.push(new Envase(3, "1KG", 980, "1000 grs"));
 envases.push(new Envase(4, "Vaso 2 bochas", 200, "150 grs"));
 envases.push(new Envase(5, "Cucurucho", 250, "200 grs"));
 envases.push(new Envase(6, "Capelina", 350, "300 grs"));
-*/
+
 // Funcion para guardar en Json.
 const guardarLocal = (clave, valor) => { localStorage.setItem(clave, valor) };
 
@@ -114,7 +113,7 @@ function tablaProd(envase){
     // Aplico desestructuracion de objetos dentro del array.
     let {id, nombre, precio, peso} = envase;
     for (envase of envases) {
-        fila.innerHTML = `<td>${envase.id}</td><td>${envase.nombre}</td><td>${envase.precio}</td><td>${envase.peso}</td>`;
+        fila.innerHTML = `<td>${id}</td><td>${nombre}</td><td>${precio}</td><td>${peso}</td>`;
     }
     /*
     fila.innerHTML = `<td>${envase.id}</td><td>${envase.nombre}</td><td>${envase.precio}</td><td>${envase.peso}</td>`;*/
